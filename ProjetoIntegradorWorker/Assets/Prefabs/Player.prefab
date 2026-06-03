@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 4539967971102251083}
   - component: {fileID: 5398785587014713158}
   - component: {fileID: 3260869537454616753}
-  - component: {fileID: 6346675334664754045}
   - component: {fileID: -1919820961483629248}
   m_Layer: 0
   m_Name: Player
@@ -106,7 +105,6 @@ MonoBehaviour:
   NestedObjects: []
   NetworkedBehaviours:
   - {fileID: 3260869537454616753}
-  - {fileID: 6346675334664754045}
   ForceRemoteRenderTimeframe: 0
 --- !u!114 &3260869537454616753
 MonoBehaviour:
@@ -125,21 +123,6 @@ MonoBehaviour:
   SyncParent: 0
   _autoAOIOverride: 1
   DisableSharedModeInterpolation: 0
---- !u!114 &6346675334664754045
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8933561756544366444}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76d90503caab5ef449ea04a2c6e6c7a8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  boy: {fileID: 8933561756544366444}
-  girl: {fileID: 8933561756544366444, guid: d7b6a48851c59dd46aa8879737cc3992, type: 3}
-  _skinAtual: 0
 --- !u!95 &-1919820961483629248
 Animator:
   serializedVersion: 5

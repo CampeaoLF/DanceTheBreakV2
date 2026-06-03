@@ -12,6 +12,7 @@ public class MultiplayerController : MonoBehaviour, INetworkRunnerCallbacks
     public Text erro; //pega fo menu
     NetworkRunner runner; // será criado no clique do botão entrar
     public GameObject playerPrefab;
+    public GameObject bGirlPrefab;
     public Canvas TelaEntrarSala; //menu da tela
 
     public List<SessionInfo> salasDisponiveis = new List<SessionInfo>();
@@ -106,14 +107,7 @@ public class MultiplayerController : MonoBehaviour, INetworkRunnerCallbacks
 
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
     {
-        //if (runner.IsServer)
-        //{
-        //    // Quando spawna o prefab do player na rede:
-        //    NetworkObject networkPlayerObject = runner.Spawn(playerPrefab, Vector3.zero, Quaternion.identity, player);
-
-        //    // ESTA LINHA É OBRIGATÓRIA PARA O SEU CANVAS SABER QUEM É QUEM:
-        //    runner.SetPlayerObject(player, networkPlayerObject);
-        //}
+       
     }
 
     public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
@@ -137,25 +131,33 @@ public class MultiplayerController : MonoBehaviour, INetworkRunnerCallbacks
             runner.GetPlayerObject(runner.LocalPlayer) == null)
         {
             Vector2 spawnPos;
+            NetworkObject player; 
 
             if (runner.IsSharedModeMasterClient)
             {
                 spawnPos = new Vector2(-4.84f, -1.41f);
+                player = runner.Spawn(
+                    playerPrefab,
+                    spawnPos,
+                    Quaternion.identity,
+                    runner.LocalPlayer
+                );
             }
             else
             {
                 spawnPos = new Vector2(4.84f, -1.41f);
+                player = runner.Spawn(
+                    bGirlPrefab,
+                    spawnPos,
+                    Quaternion.identity,
+                    runner.LocalPlayer
+                );
             }
 
-            NetworkObject player = runner.Spawn(
-                playerPrefab,
-                spawnPos,
-                Quaternion.identity,
-                runner.LocalPlayer
-            );
-
+            
             runner.SetPlayerObject(runner.LocalPlayer, player);
 
+            
             if (runner.IsSharedModeMasterClient)
             {
                 player.transform.localScale = new Vector3(4, 4, 4);

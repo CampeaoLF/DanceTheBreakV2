@@ -77,6 +77,7 @@ public class ButtonScript : NetworkBehaviour
             backGround3.gameObject.SetActive(true);
             if (backGround1 != null) backGround1.gameObject.SetActive(false);
             if (backGround2 != null) backGround2.gameObject.SetActive(false);
+
         }
     }
 
@@ -87,7 +88,7 @@ public class ButtonScript : NetworkBehaviour
         {
             player = Runner.GetPlayerObject(Runner.LocalPlayer);
         }
-        
+      
     }
 
     public override void Render()
@@ -163,7 +164,7 @@ public class ButtonScript : NetworkBehaviour
     //}
 
 
-
+    
     public void ClickMoveBaseFirst(Button botao)
     {
         if (player == null) return;
