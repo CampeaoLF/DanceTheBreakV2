@@ -118,17 +118,17 @@ public class ChooseAnim : NetworkBehaviour
 
     public void MainGame()
     {
-        // Procura o NetworkRunner que veio da cena anterior graças ao DontDestroyOnLoad
+        
         NetworkRunner runner = FindObjectOfType<NetworkRunner>();
 
         if (runner != null && runner.IsRunning)
         {
-            // Substituir "SetActiveScene" por "LoadScene" para corrigir o erro CS1061
+            
             runner.LoadScene("MainGame", UnityEngine.SceneManagement.LoadSceneMode.Single);
         }
         else
         {
-            // Caso estejas a testar offline sem passar pelo menu
+            
             SceneManager.LoadScene("MainGame");
         }
     }

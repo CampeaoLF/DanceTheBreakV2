@@ -6,8 +6,10 @@ using System.Linq;
 public class ButtonScript : NetworkBehaviour
 {
     [Networked] public NetworkObject player { get; set; }
+    [Networked] public NetworkObject player2 { get; set; }
     [SerializeField] public GameManager gameManager;
     [SerializeField] public Animator playerAnimator;
+    [SerializeField] public Animator player2Animator;
 
     [Header("Botões de movimento base")]
     [SerializeField] public Button[] buttonsMoveBase;
@@ -83,12 +85,21 @@ public class ButtonScript : NetworkBehaviour
 
     public override void FixedUpdateNetwork()
     {
-        if (!HasStateAuthority) return;
-        if (player == null && Runner != null && Runner.IsRunning)
+       if (HasStateAuthority)
+       {
+        if (player == null  && Runner.IsRunning)
         {
             player = Runner.GetPlayerObject(Runner.LocalPlayer);
         }
-      
+        else
+        {  
+            
+            player2 = Runner.GetPlayerObject(Runner.LocalPlayer);
+
+        }
+       
+
+       }
     }
 
     public override void Render()
@@ -163,9 +174,18 @@ public class ButtonScript : NetworkBehaviour
     //    }
     //}
 
-
-    
-    public void ClickMoveBaseFirst(Button botao)
+    //public void ClickMoves()
+    //{
+    //    if (HasInputAuthority)
+    //    {
+            
+    //    ClickMoveBaseFirst();
+    //    ClickMoveBaseSecond();
+    //    ClickMoveBaseThird();
+    //    ClickMoveBaseSpecial();
+    //    }
+    //}    
+    public void ClickMoveBaseFirst()
     {
         if (player == null) return;
 
@@ -214,7 +234,7 @@ public class ButtonScript : NetworkBehaviour
         currentAnimation = 3;
     }
 
-    public void ClickMoveBaseSpecial(Button botao)
+    public void ClickMoveBaseSpecial()
     {
         if (player == null) return;
 

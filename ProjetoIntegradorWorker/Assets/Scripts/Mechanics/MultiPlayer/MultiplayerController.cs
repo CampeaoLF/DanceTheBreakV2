@@ -1,8 +1,9 @@
-using System.Collections.Generic;
-using UnityEngine;
 using Fusion;
 using Fusion.Sockets;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class MultiplayerController : MonoBehaviour, INetworkRunnerCallbacks
@@ -18,6 +19,7 @@ public class MultiplayerController : MonoBehaviour, INetworkRunnerCallbacks
     public List<SessionInfo> salasDisponiveis = new List<SessionInfo>();
     public Text ListaLobby;
 
+    private Dictionary<PlayerRef, NetworkObject> _spawnedCharacters = new Dictionary<PlayerRef, NetworkObject>();
 
     public async void EntrarSala()
     {
@@ -127,13 +129,18 @@ public class MultiplayerController : MonoBehaviour, INetworkRunnerCallbacks
 
     public void OnSceneLoadDone(NetworkRunner runner)
     {
-        if (runner.LocalPlayer != PlayerRef.None &&
+            if (runner.LocalPlayer != PlayerRef.None &&
             runner.GetPlayerObject(runner.LocalPlayer) == null)
         {
-            Vector2 spawnPos;
-            NetworkObject player; 
+            Vector2 spawnPos;   
+            NetworkObject player;
 
-            if (runner.IsSharedModeMasterClient)
+            // conta quantos jogadores estão na lista de jogadores e decide o spawn baseado nisso
+            int playerCount = runner.ActivePlayers.Count();
+            //se a lista igual a zero spawn na esquerda, se a lista igual a um spawn na direita
+
+
+            if (runner.ActivePlayers.Count() == 1)
             {
                 spawnPos = new Vector2(-4.84f, -1.41f);
                 player = runner.Spawn(
@@ -142,6 +149,9 @@ public class MultiplayerController : MonoBehaviour, INetworkRunnerCallbacks
                     Quaternion.identity,
                     runner.LocalPlayer
                 );
+                _spawnedCharacters[runner.LocalPlayer] = player;
+                //adiciona na lista de jogadores
+                Debug.Log("Spawnou o primeiro jogador na posição esquerda");
             }
             else
             {
@@ -152,9 +162,12 @@ public class MultiplayerController : MonoBehaviour, INetworkRunnerCallbacks
                     Quaternion.identity,
                     runner.LocalPlayer
                 );
+                _spawnedCharacters[runner.LocalPlayer] = player;
+                //adiciona na lista de jogadores
+                Debug.Log("Spawnou o segundo jogador na posição direita");
             }
 
-            
+
             runner.SetPlayerObject(runner.LocalPlayer, player);
 
             
@@ -166,6 +179,7 @@ public class MultiplayerController : MonoBehaviour, INetworkRunnerCallbacks
             {
                 player.transform.localScale = new Vector3(-4, 4, 4);
             }
+            Debug.Log($"Jogadores na sala: {playerCount}");
         }
     }
 
