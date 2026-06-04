@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5398785587014713158}
   - component: {fileID: 3260869537454616753}
   - component: {fileID: -1919820961483629248}
+  - component: {fileID: 5187124344579319173}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -105,6 +106,7 @@ MonoBehaviour:
   NestedObjects: []
   NetworkedBehaviours:
   - {fileID: 3260869537454616753}
+  - {fileID: 5187124344579319173}
   ForceRemoteRenderTimeframe: 0
 --- !u!114 &3260869537454616753
 MonoBehaviour:
@@ -144,3 +146,17 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &5187124344579319173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8933561756544366444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98d8030dca991344295102353474701e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _CurrentAnimation: 0
+  sprites: []

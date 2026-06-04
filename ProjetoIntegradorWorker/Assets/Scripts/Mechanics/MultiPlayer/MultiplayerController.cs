@@ -136,11 +136,16 @@ public class MultiplayerController : MonoBehaviour, INetworkRunnerCallbacks
             NetworkObject player;
 
             // conta quantos jogadores estão na lista de jogadores e decide o spawn baseado nisso
-            int playerCount = runner.ActivePlayers.Count();
+            //int playerCount = runner.ActivePlayers.Count();
             //se a lista igual a zero spawn na esquerda, se a lista igual a um spawn na direita
 
+            var players = runner.ActivePlayers
+                 .OrderBy(p => p.PlayerId)
+                 .ToList();
 
-            if (runner.ActivePlayers.Count() == 1)
+            int myIndex = players.IndexOf(runner.LocalPlayer);
+
+            if (myIndex == 0)
             {
                 spawnPos = new Vector2(-4.84f, -1.41f);
                 player = runner.Spawn(
@@ -179,7 +184,7 @@ public class MultiplayerController : MonoBehaviour, INetworkRunnerCallbacks
             {
                 player.transform.localScale = new Vector3(-4, 4, 4);
             }
-            Debug.Log($"Jogadores na sala: {playerCount}");
+            //Debug.Log($"Jogadores na sala: {playerCount}");
         }
     }
 
