@@ -7,7 +7,7 @@ public class CountDownScript : MonoBehaviour
     [SerializeField] float musicTime;
     [SerializeField] GameObject derrotaScreen;
     [SerializeField] GameObject vitoriaScreen;
-
+    public AudioController audioController;
     [SerializeField] GameManager gameManager;
 
     void Update()
@@ -21,11 +21,15 @@ public class CountDownScript : MonoBehaviour
         if (musicTime <= 0 && gameManager.score < 200)
         {
             derrotaScreen.SetActive(true);
+            audioController.audioSource.enabled = false; 
+            gameManager.progressBar.gameObject.SetActive(false);
         }
 
-        if (musicTime <= 0 && gameManager.score >= 200)
+        if (gameManager.score >= 200)
         {
             vitoriaScreen.SetActive(true);
+            audioController.audioSource.enabled = false;
+            gameManager.progressBar.gameObject.SetActive(false);
         }
 
     }

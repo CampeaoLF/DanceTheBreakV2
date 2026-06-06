@@ -7,5 +7,9 @@ public class SwitchScene : MonoBehaviour
     {
         SceneManager.LoadScene(sceneName);
     }
+    public void Menu()
+    {
+        SceneManager.LoadScene("Menu");
+    }
 
 }

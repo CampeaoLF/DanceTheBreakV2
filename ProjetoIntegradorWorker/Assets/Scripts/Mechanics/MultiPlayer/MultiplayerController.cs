@@ -20,6 +20,9 @@ public class MultiplayerController : MonoBehaviour, INetworkRunnerCallbacks
     public Text ListaLobby;
 
     private Dictionary<PlayerRef, NetworkObject> _spawnedCharacters = new Dictionary<PlayerRef, NetworkObject>();
+    [SerializeField] private NetworkPrefabRef lobbyManagerPrefab;
+
+    private LobbyManager lobbyManager;
 
     public async void EntrarSala()
     {
@@ -185,6 +188,13 @@ public class MultiplayerController : MonoBehaviour, INetworkRunnerCallbacks
                 player.transform.localScale = new Vector3(-4, 4, 4);
             }
             //Debug.Log($"Jogadores na sala: {playerCount}");
+            if (runner.IsSharedModeMasterClient)
+            {
+                runner.Spawn(
+                    lobbyManagerPrefab,
+                    Vector3.zero,
+                    Quaternion.identity);
+            }
         }
     }
 

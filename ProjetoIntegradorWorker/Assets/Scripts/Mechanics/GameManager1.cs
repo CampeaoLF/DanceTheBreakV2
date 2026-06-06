@@ -14,6 +14,7 @@ public class GameManager : NetworkBehaviour
     [SerializeField] public GameObject background;
     [SerializeField] public TextMeshProUGUI scoreNumber;
     [SerializeField] public Button special;
+    [SerializeField] public Slider progressBar;
 
     [SerializeField] public Button buttonSimple1;
     [SerializeField] public Button buttonSimple2;
@@ -28,12 +29,13 @@ public class GameManager : NetworkBehaviour
 
     void Start()
     {
-
+      //DontDestroyOnLoad(this);
     }
 
     void UpdateScore()
     {
         scoreNumber.text = score.ToString();
+        progressBar.value = (float)score / 200f;
         if (buttonCooldownImage.fillAmount > 0)
         {
             buttonCooldownImage.fillAmount -= 20f * Time.deltaTime;
@@ -143,4 +145,5 @@ public class GameManager : NetworkBehaviour
         buttonCooldownImage3.fillAmount = 1;
 
     }
+    
 }

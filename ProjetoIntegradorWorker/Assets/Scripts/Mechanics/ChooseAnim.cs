@@ -16,6 +16,7 @@ public class ChooseAnim : NetworkBehaviour
     public GameObject simpleSelect;
     public GameObject normalSelect;
     public GameObject specialSelect;
+    public GameObject lobbyP;
 
     public int qtdMaxSimple = 2;
     public int qtdMaxNormal = 1;
@@ -23,12 +24,14 @@ public class ChooseAnim : NetworkBehaviour
 
     public GameObject Runner;
 
-
+    public GameObject refBBoy;
+    public GameObject refBGirl;
 
 
     public Button nextPanelNormal;
     public Button nextPanelSpecial;
     public Button game;
+    public Button lobby;
 
 
     public void ChooseSimple(string name)
@@ -111,9 +114,22 @@ public class ChooseAnim : NetworkBehaviour
         Debug.Log("Quantidade de escolhas: " + bottonSpecial.Count);
         if (bottonSpecial.Count == qtdMaxSpecial)
         {
-            game.gameObject.SetActive(true);
+            lobby.gameObject.SetActive(true);
+            if (LobbyManager.Instance != null)
+            {
+                LobbyManager.Instance.RPC_EntrouLobby();
+                
+            }
         }
 
+    }
+
+    public void NextPanelLobby()
+    {
+        simpleSelect.SetActive(false);
+        normalSelect.SetActive(false);
+        specialSelect.SetActive(false);
+        lobbyP.SetActive(true);
     }
 
     public void MainGame()
@@ -132,8 +148,30 @@ public class ChooseAnim : NetworkBehaviour
             SceneManager.LoadScene("MainGame");
         }
     }
+
+    void Update()
+    {
+        if (LobbyManager.Instance == null)
+            return;
+
+        if (LobbyManager.Instance.LobbyCount >= 1)
+            refBBoy.SetActive(true);
+
+        if (LobbyManager.Instance.LobbyCount >= 2)
+            refBGirl.SetActive(true);
+
+        if (game != null)
+        {
+            game.gameObject.SetActive(
+                LobbyManager.Instance.LobbyCount >= 2
+            );
+        }
+    }
     void Start()
     {
+        refBBoy.SetActive(false);
+        refBGirl.SetActive(false);
+
         DontDestroyOnLoad(this);
     }
 }
