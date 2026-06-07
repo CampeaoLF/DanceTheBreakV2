@@ -127,7 +127,7 @@ public class ButtonScript : NetworkBehaviour
             var chooseAnim = animManager.GetComponent<ChooseAnim>();
             if (chooseAnim != null)
             {
-                // Proteção caso as listas não tenham a quantidade esperada de elementos
+                
                 if (chooseAnim.bottonSimple.Count > 0) bottomSimple1 = chooseAnim.bottonSimple.ElementAt(0);
                 if (chooseAnim.bottonSimple.Count > 1) bottomSimple2 = chooseAnim.bottonSimple.ElementAt(1);
                 if (chooseAnim.bottonNormal.Count > 0) bottomNormal = chooseAnim.bottonNormal.ElementAt(0);

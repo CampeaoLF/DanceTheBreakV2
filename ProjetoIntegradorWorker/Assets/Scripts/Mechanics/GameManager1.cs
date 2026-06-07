@@ -25,8 +25,13 @@ public class GameManager : NetworkBehaviour
     [SerializeField] public Image buttonCooldownImage2;
     [SerializeField] public Image buttonCooldownImage3;
 
-    
 
+    public bool Ready { get; private set; }
+
+    public override void Spawned()
+    {
+        Ready = true;
+    }
     void Start()
     {
       //DontDestroyOnLoad(this);

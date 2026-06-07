@@ -1,0 +1,5 @@
+Precisa testar apk para ver como ajustar o canvas
+botões dos painéis de vitória e derrota já estão configurados porem precisa de uma direção exata
+botão pause precisa de alguma função pois esta no gdd
+colocar sprites de cada botão da seleção 
+ajustar painel de entrada em sala para mostrar salas 

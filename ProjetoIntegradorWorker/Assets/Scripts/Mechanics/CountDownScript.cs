@@ -9,9 +9,16 @@ public class CountDownScript : MonoBehaviour
     [SerializeField] GameObject vitoriaScreen;
     public AudioController audioController;
     [SerializeField] GameManager gameManager;
+    [SerializeField] private TextMeshProUGUI pointsText;
 
     void Update()
     {
+        if (gameManager == null)
+            return;
+
+        if (!gameManager.Ready)
+            return;
+
 
         musicTime -= Time.deltaTime;
         int minutes = Mathf.FloorToInt(musicTime / 60);
@@ -20,6 +27,7 @@ public class CountDownScript : MonoBehaviour
 
         if (musicTime <= 0 && gameManager.score < 200)
         {
+            pointsText.text = gameManager.score.ToString();
             derrotaScreen.SetActive(true);
             audioController.audioSource.enabled = false; 
             gameManager.progressBar.gameObject.SetActive(false);
@@ -27,6 +35,7 @@ public class CountDownScript : MonoBehaviour
 
         if (gameManager.score >= 200)
         {
+            pointsText.text = gameManager.score.ToString();
             vitoriaScreen.SetActive(true);
             audioController.audioSource.enabled = false;
             gameManager.progressBar.gameObject.SetActive(false);

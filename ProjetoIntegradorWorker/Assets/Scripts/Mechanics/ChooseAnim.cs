@@ -6,8 +6,7 @@ using UnityEngine.UI;
 
 public class ChooseAnim : NetworkBehaviour
 {
-    private string animation;
-    private bool value;
+   
 
     public List<string> bottonSpecial = new List<string>();
     public List<string> bottonSimple = new List<string>();
@@ -16,6 +15,7 @@ public class ChooseAnim : NetworkBehaviour
     public GameObject simpleSelect;
     public GameObject normalSelect;
     public GameObject specialSelect;
+    public GameObject levelSelect;
     public GameObject lobbyP;
 
     public int qtdMaxSimple = 2;
@@ -31,6 +31,7 @@ public class ChooseAnim : NetworkBehaviour
     public Button nextPanelNormal;
     public Button nextPanelSpecial;
     public Button game;
+    public Button selectLevel;
     public Button lobby;
 
 
@@ -114,22 +115,31 @@ public class ChooseAnim : NetworkBehaviour
         Debug.Log("Quantidade de escolhas: " + bottonSpecial.Count);
         if (bottonSpecial.Count == qtdMaxSpecial)
         {
-            lobby.gameObject.SetActive(true);
+            selectLevel.gameObject.SetActive(true);
+
             if (LobbyManager.Instance != null)
             {
                 LobbyManager.Instance.RPC_EntrouLobby();
-                
             }
         }
 
     }
 
+    public void NextPanelSelectLevel()
+    {
+        simpleSelect.SetActive(false);
+        normalSelect.SetActive(false);
+        specialSelect.SetActive(false);
+        lobbyP.SetActive(false);
+        levelSelect.SetActive(true);
+    }
     public void NextPanelLobby()
     {
         simpleSelect.SetActive(false);
         normalSelect.SetActive(false);
         specialSelect.SetActive(false);
-        lobbyP.SetActive(true);
+        levelSelect.SetActive(false);
+        
     }
 
     public void MainGame()
@@ -154,25 +164,18 @@ public class ChooseAnim : NetworkBehaviour
         if (LobbyManager.Instance == null)
             return;
 
-        if (LobbyManager.Instance.LobbyCount >= 1)
-            refBBoy.SetActive(true);
+        if (LobbyManager.Instance.Object == null)
+            return;
 
-        if (LobbyManager.Instance.LobbyCount >= 2)
-            refBGirl.SetActive(true);
-
-        if (game != null)
-        {
-            game.gameObject.SetActive(
-                LobbyManager.Instance.LobbyCount >= 2
-            );
-        }
+        refBBoy.SetActive(LobbyManager.Instance.LobbyCount >= 1);
+        refBGirl.SetActive(LobbyManager.Instance.LobbyCount >= 2);
     }
     void Start()
     {
         refBBoy.SetActive(false);
         refBGirl.SetActive(false);
 
-        DontDestroyOnLoad(this);
+        //DontDestroyOnLoad(this);
     }
 }
 

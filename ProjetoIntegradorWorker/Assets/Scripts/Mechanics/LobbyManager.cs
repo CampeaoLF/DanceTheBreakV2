@@ -1,36 +1,52 @@
 using Fusion;
 using UnityEngine;
+using TMPro;
 
 public class LobbyManager : NetworkBehaviour
 {
     public static LobbyManager Instance;
     [Networked] public int LobbyCount { get; set; }
+    [Networked] public  TickTimer startTimer { get; set; }
 
-    [Networked] public bool P1Ready { get; set; }
-    [Networked] public bool P2Ready { get; set; }
-    //[Networked] public int ReadyCount { get; set; }
 
-    private bool partidaIniciada;
+
 
     public override void Spawned()
     {
         Instance = this;
-        Debug.Log("LobbyManager Spawnado");
+
+        
     }
-
-    //[Rpc(RpcSources.All, RpcTargets.StateAuthority)]
-    //public void RPC_SetReady()
-    //{
-    //    ReadyCount++;
-
-    //    Debug.Log($"Jogadores prontos: {ReadyCount}");
-    //}
 
     public override void FixedUpdateNetwork()
     {
-        if (LobbyCount >= 2)
+        
+
+        if (!HasStateAuthority)
+            return;
+
+        
+
+        if (LobbyCount >= 2 && !startTimer.IsRunning)
         {
-            Debug.Log("Todos chegaram ao lobby");
+            
+            startTimer = TickTimer.CreateFromSeconds(Runner, 5f);
+        }
+
+
+        if (startTimer.IsRunning)
+        {
+           
+        }
+
+        if (startTimer.Expired(Runner))
+        {
+            
+
+            Runner.LoadScene(
+                LevelManager.selectedMap,
+                UnityEngine.SceneManagement.LoadSceneMode.Single
+            );
         }
     }
     [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
@@ -38,6 +54,6 @@ public class LobbyManager : NetworkBehaviour
     {
         LobbyCount++;
 
-        Debug.Log($"Jogadores no lobby: {LobbyCount}");
+
     }
 }
